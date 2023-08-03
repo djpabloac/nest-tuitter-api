@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import configuration from './config/configuration';
 import { validationSchema } from './config/validation';
 import { TuitsModule } from './modules/tuits/tuits.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TuitsModule } from './modules/tuits/tuits.module';
     }),
     MongooseModule.forRoot(process.env.MONGO_URI),
     TuitsModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}
