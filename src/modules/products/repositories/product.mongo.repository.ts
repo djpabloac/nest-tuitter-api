@@ -5,7 +5,7 @@ import { UpdateProductDto } from '../dto/update-product.dto';
 import { Product } from '../entities/product.entity';
 import { ProductRepository } from '../entities/product.repository';
 import { InjectModel } from '@nestjs/mongoose';
-import { ProductDocument, ProductModel } from '../schemas/product.schema';
+import { ProductModel } from '../schemas/product.schema';
 
 @Injectable()
 export default class ProductMongoRepository implements ProductRepository {
@@ -13,7 +13,7 @@ export default class ProductMongoRepository implements ProductRepository {
     @InjectModel(Product.name) private readonly productModel: ProductModel,
   ) {}
 
-  private mapToProduct(rawProduct: ProductDocument) {
+  private mapToProduct(rawProduct: Record<string, any>) {
     const product = new Product();
 
     product.id = rawProduct._id.toString();
