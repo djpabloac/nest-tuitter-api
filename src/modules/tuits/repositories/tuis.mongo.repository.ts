@@ -6,13 +6,13 @@ import { CreateTuitDto } from '../dto/create-tuit.dto';
 import { FinderTuitDto } from '../dto/finder-tuit.dto';
 import { UpdateTuitDto } from '../dto/update-tuit.dto';
 import { Tuit } from '../entities/tuit.entity';
-import { TuitDocument, TuitModel } from '../schemas/tuit.schema';
+import { TuitModel } from '../schemas/tuit.schema';
 
 @Injectable()
 export class TuitMongoRepository implements TuitRepository {
   constructor(@InjectModel(Tuit.name) private tuitModel: TuitModel) {}
 
-  private mapToUser(rawTuit: TuitDocument) {
+  private mapToUser(rawTuit: Record<string, any>) {
     const tuit = new Tuit();
 
     tuit.id = rawTuit._id.toString();
@@ -63,7 +63,7 @@ export class TuitMongoRepository implements TuitRepository {
   }
 
   async remove(id: string): Promise<Tuit | null> {
-    const tuitDeleted = await this.tuitModel.findByIdAndRemove(id).lean();
+    const tuitDeleted = await this.tuitModel.findByIdAndDelete(id).lean();
 
     if (!tuitDeleted) return null;
 
